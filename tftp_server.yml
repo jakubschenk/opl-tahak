@@ -26,12 +26,12 @@
           TFTP_DIRECTORY="/tftp"
           TFTP_ADDRESS="10.0.1.1:69"
           TFTP_OPTIONS="--secure --create"
-      create: yes
-      insert_befores:
-        - '^TFTP_USERNAME='
-        - '^TFTP_DIRECTORY='
-        - '^TFTP_ADDRESS='
-        - '^TFTP_OPTIONS='
+        create: yes
+        insertbefore:
+          - '^TFTP_USERNAME='
+          - '^TFTP_DIRECTORY='
+          - '^TFTP_ADDRESS='
+          - '^TFTP_OPTIONS='
 
     - name: Restart TFTP server to apply changes
       service:
