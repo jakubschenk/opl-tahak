@@ -1,0 +1,40 @@
+---
+- name: Install and configure TFTP server on debian-01
+  hosts: 10.0.1.1
+  become: yes
+
+  tasks:
+    - name: Ensure TFTP server package is installed
+      apt:
+        name: tftpd-hpa
+        state: present
+        update_cache: yes
+
+    - name: Create /tftp directory
+      file:
+        path: /tftp
+        owner: tftp
+        group: tftp
+        mode: "0777"
+        state: directory
+
+    - name: Configure /etc/default/tftpd-hpa (TFTP_ADDRESS, TFTP_DIRECTORY, TFTP_OPTIONS)
+      blockinfile:
+        path: /etc/default/tftpd-hpa
+        block: |
+          TFTP_USERNAME="tftp"
+          TFTP_DIRECTORY="/tftp"
+          TFTP_ADDRESS="10.0.1.1:69"
+          TFTP_OPTIONS="--secure --create"
+      create: yes
+      insert_befores:
+        - '^TFTP_USERNAME='
+        - '^TFTP_DIRECTORY='
+        - '^TFTP_ADDRESS='
+        - '^TFTP_OPTIONS='
+
+    - name: Restart TFTP server to apply changes
+      service:
+        name: tftpd-hpa
+        state: restarted
+        enabled: yes
