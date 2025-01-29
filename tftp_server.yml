@@ -27,7 +27,7 @@
           TFTP_ADDRESS="10.0.1.1:69"
           TFTP_OPTIONS="--secure --create"
         create: yes
-        insertbefore:
+        insertafter:
           - '^TFTP_USERNAME='
           - '^TFTP_DIRECTORY='
           - '^TFTP_ADDRESS='
