@@ -1,0 +1,11 @@
+---
+- name: Install and configure TFTP client
+  hosts: 10.0.1.2
+  become: yes
+
+  tasks:
+    - name: Ensure TFTP client is installed
+      apt:
+        name: tftp
+        state: present
+        update_cache: yes
